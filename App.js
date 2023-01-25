@@ -1,20 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// on importe useFont
+import { useFonts } from "expo-font";
+// On importe le container de la pile de navigation
+import { NavigationContainer } from "@react-navigation/native";
+// ON importe les écrans ou navigation
+import MainStack from "./src/navigations/MainStack";
+import LoadingScreen from "./src/screens/LoadingScreen";
 
 export default function App() {
+  // On charge les fonts
+  let [ fontsLoaded] = useFonts({
+    'openSansMedium': require('./assets/fonts/OpenSans-Medium.ttf'),
+    'openSansLight': require('./assets/fonts/OpenSans-Light.ttf'),
+    'Meow': require('./assets/fonts/MeowScript-Regular.ttf'),
+    'Nunito': require('./assets/fonts/Nunito-Regular.ttf'),
+  });
+  // On Vérifie si les fonts sont chargées
+  if(!fontsLoaded) {
+    return <LoadingScreen />
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <MainStack />
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
